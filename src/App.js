@@ -6,7 +6,7 @@ import Zutaten from './components/Zutaten';
 function App() {
 
   // Daten aus Child Komponent an Partner Komponent übergeben Portionen > App.js
-  const [data, setData] = useState('');
+  const [data, setData] = useState(10);
 
   // Portionen changer einblenden
   const [view, setView] = useState(true);
@@ -40,7 +40,7 @@ function App() {
       </div> 
       <br></br>
       Anzahl Portionen: {data} <br></br>
-      <Zutaten portAnz={2}/>
+      <Zutaten portAnz={data}/>
     </div>
   );
 }
