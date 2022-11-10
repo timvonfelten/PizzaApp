@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 const Zutaten = (props) => {
-
+    console.log(props.zutatenToParent)
     const initalState = {
         mehl: 1550,
         wasser: 1000,
@@ -38,7 +38,18 @@ const Zutaten = (props) => {
     useEffect(() => {
         console.log("triggerd use Effect")
         handlePortChange()
+        // evtl. nicht ganz gut muss später ausgeführt werden damit neue werte übergeben werden
+        returnZutaten()
     },[props.portAnz]);
+
+
+    const returnZutaten = () => {
+        const data = zutaten;
+        // Daten an Parent zurückgebgen für Einkaufliste
+        console.log(props.zutatenToParent)
+        props.zutatenToParent(data)
+    };
+
 
     return(
         <div>
@@ -54,11 +65,10 @@ const Zutaten = (props) => {
             </ul>
             <button onClick={handlePortChange}>Zutaten update</button>
             <button onClick={resetState}>reset</button>
+            <button onClick={returnZutaten}>Zutaten an App.js übermitteln</button>
+        
         </div>
     )
-
-
-
 }
 
 export default Zutaten

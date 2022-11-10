@@ -2,17 +2,29 @@ import logo from './logo.svg';
 import Portionen from './components/Portionen';
 import { useState } from 'react';
 import Zutaten from './components/Zutaten';
+import Einkaufsliste from './components/Einkaufsliste';
 
 function App() {
 
   // Daten aus Child Komponent an Partner Komponent übergeben Portionen > App.js
-  const [data, setData] = useState(10);
+  const [port, setPort] = useState(10);
+  const [zutaten, setZutaten] = useState(1);
 
   // Portionen changer einblenden
   const [view, setView] = useState(true);
+  //Portionen von Child an App übergeben
   const childToParent = (childdata) => {
-    setData(childdata);
+    setPort(childdata);
   }
+  //
+  const zutatenToParent = (childdata) => {
+    setZutaten(childdata);
+  }
+
+  const print = () => {
+    console.log("zutaten:", zutaten)
+  }
+  
 
 
 // Portionen changer einblenden 
@@ -39,8 +51,12 @@ function App() {
       </div>
       </div> 
       <br></br>
-      Anzahl Portionen: {data} <br></br>
-      <Zutaten portAnz={data}/>
+      Anzahl Portionen: {port} <br></br>
+      <Zutaten zutatenToParent={zutatenToParent} portAnz={port}/>
+      <hr></hr>
+      <h1>Checkliste</h1>
+      <Einkaufsliste category="Einkaufsliste" zutaten={zutaten}></Einkaufsliste>
+      <button onClick={print}>Print</button>
     </div>
   );
 }
