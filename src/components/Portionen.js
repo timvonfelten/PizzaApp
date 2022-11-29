@@ -4,7 +4,7 @@ import { useState } from "react";
 const Portionen = (props) => {
 
     // State für Portionen setzen und inital Wert setzen
-    const [port, setPort] = useState(11);
+    const [port, setPort] = useState(10);
 
     const handleChange = event => {
         setPort(event.target.value);

@@ -1,34 +1,45 @@
 import logo from './logo.svg';
-import Portionen from './components/Portionen';
+
 import { useState } from 'react';
-import Zutaten from './components/Zutaten';
-import Einkaufsliste from './components/Einkaufsliste';
+import Ingredients from './components/Ingredients';
+import Shoppinglist from './components/Shoppinglist';
+import Timetable from './components/Timetable';
 
 function App() {
 
   // Daten aus Child Komponent an Partner Komponent übergeben Portionen > App.js
-  const [port, setPort] = useState(10);
-  const [zutaten, setZutaten] = useState(1);
+  const [portions, setPortions] = useState(10);
+
 
   // Portionen changer einblenden
   const [view, setView] = useState(true);
+  const [viewIndex, setViewIndex] = useState(true);
   //Portionen von Child an App übergeben
-  const childToParent = (childdata) => {
-    setPort(childdata);
-  }
   //
-  const zutatenToParent = (childdata) => {
-    setZutaten(childdata);
-  }
+  const [ingredients, setIngredients] = useState({});
+  const [time, setTime] = useState("2022-12-01T18:00")
 
-  const print = () => {
-    console.log("zutaten:", zutaten)
-  }
-  
 
+
+  const handlePortionChange = event => {
+    setPortions(event.target.value);
+  };
+
+  const handleTimeChange = event => {
+    setTime(event.target.value);
+  };
+
+
+  const changeViewIndex = (index) => {
+    var newViewIndex = viewIndex;
+    newViewIndex = index;
+    setViewIndex(newViewIndex);
+    console.log(newViewIndex)
+  }
 
 // Portionen changer einblenden 
 //-----------------------------------------
+/*
   const changeView = () => {
     var newView = view
     if(newView === true) {
@@ -39,24 +50,52 @@ function App() {
     }
     setView(newView);
 }
+*/
 //-----------------------------------------
 
 
   return (
-    <div className="m-10">
-      <div className='tracking-wider border-2'>
-      <button className='bg-red-300 p-2' onClick={changeView}>Portionen ändern</button>
-      <div className={view ? "hidden" : "visible"}>
-        <Portionen className="m-20" childToParent={childToParent}/>
+    <div className="font-sofia">
+      <div className='text-center bg-black text-gold font-light p-10 tracking-wider text-2xl'>Logo</div>
+
+      <div className='h-15 bg-black fixed bottom-0 w-full flex justify-center'>
+      <button index='0' className='bg-black text-gold p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex('0')}>Start</button>
+      <button index='1' className='bg-black text-gold p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex('1')}>Zutaten</button>
+      <button index='2' className='bg-black text-gold p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex('2')}>Einkaufliste</button>
+      <button index='3' className='bg-black text-gold p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex('3')}>Rezept</button>
       </div>
+
+      <div className='m-10 pb-20'>
+      <div className='tracking-wider'>
+      <div className={viewIndex === "0" ? "visible" : "hidden"}>
+      <div className='text-center'>
+            <form>
+                <label className="block">
+                    <span className="block text-sm font-medium text-slate-700">Anzahl Portionen:</span>
+                    <input className="border-2 border-black m-2 p-2" type="number" value={portions} onChange={handlePortionChange}/>
+                </label>
+                <label className="block">
+                    <span className="block text-sm font-medium text-slate-700">Pizza finito um:</span>
+                    <input className="border-2 border-black m-2 p-2" type="datetime-local" value={time} onChange={handleTimeChange}/>
+                </label>
+            </form>
+        </div>
+      </div>
+      <div className={viewIndex === "1" ? "visible" : "hidden"}>test</div>
       </div> 
       <br></br>
-      Anzahl Portionen: {port} <br></br>
-      <Zutaten zutatenToParent={zutatenToParent} portAnz={port}/>
+      Anzahl Portionen: {portions} <br></br>
+      <Ingredients portions={portions} setIngredients={setIngredients} />
       <hr></hr>
       <h1>Checkliste</h1>
-      <Einkaufsliste category="Einkaufsliste" zutaten={zutaten}></Einkaufsliste>
-      <button onClick={print}>Print</button>
+      <Shoppinglist category="Einkaufsliste" ingredients={ingredients}></Shoppinglist>
+
+
+      <div className={viewIndex === "3" ? "visible" : "hidden"}>
+      <Timetable time={time}></Timetable>
+      </div>
+
+      </div>
     </div>
   );
 }
