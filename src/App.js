@@ -13,7 +13,7 @@ function App() {
 
   // Portionen changer einblenden
   const [view, setView] = useState(true);
-  const [viewIndex, setViewIndex] = useState(true);
+  const [viewIndex, setViewIndex] = useState("0");
   //Portionen von Child an App übergeben
   //
   const [ingredients, setIngredients] = useState({});
@@ -34,7 +34,6 @@ function App() {
     var newViewIndex = viewIndex;
     newViewIndex = index;
     setViewIndex(newViewIndex);
-    console.log(newViewIndex)
   }
 
 // Portionen changer einblenden 
@@ -56,7 +55,7 @@ function App() {
 
   return (
     <div className="font-sofia">
-      <div className='text-center bg-black text-gold font-light p-10 tracking-wider text-2xl'>Logo</div>
+      <div className='text-center bg-black text-gold font-light p-10 tracking-widest uppercase text-2xl'>Pizzart</div>
 
       <div className='h-15 bg-black fixed bottom-0 w-full flex justify-center'>
       <button index='0' className='bg-black text-gold p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex('0')}>Start</button>
@@ -66,7 +65,7 @@ function App() {
       </div>
 
       <div className='m-10 pb-20'>
-      <div className='tracking-wider'>
+
       <div className={viewIndex === "0" ? "visible" : "hidden"}>
       <div className='text-center'>
             <form>
@@ -81,18 +80,17 @@ function App() {
             </form>
         </div>
       </div>
-      <div className={viewIndex === "1" ? "visible" : "hidden"}>test</div>
-      </div> 
-      <br></br>
-      Anzahl Portionen: {portions} <br></br>
-      <Ingredients portions={portions} setIngredients={setIngredients} />
-      <hr></hr>
-      <h1>Checkliste</h1>
+      
+      <div className={viewIndex === "1" ? "visible" : "hidden"} >
+        <Ingredients portions={portions} setIngredients={setIngredients}></Ingredients>
+      </div>
+      
+      <div className={viewIndex === "2" ? "visible" : "hidden"} >
       <Shoppinglist category="Einkaufsliste" ingredients={ingredients}></Shoppinglist>
-
+      </div>
 
       <div className={viewIndex === "3" ? "visible" : "hidden"}>
-      <Timetable time={time}></Timetable>
+      <Timetable time={time} ingredients={ingredients} portions={portions}></Timetable>
       </div>
 
       </div>

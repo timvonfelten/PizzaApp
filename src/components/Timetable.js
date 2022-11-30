@@ -3,10 +3,12 @@ const Timetable = (props) => {
 
     const subHours = (hours, date = new Date()) => {
         const newDate = new Date(date.getTime() - hours * 60 * 60 * 1000)
-        const newMinutes = newDate.getMinutes()
+        var newMinutes = newDate.getMinutes()
+        if (newMinutes === 0){
+            newMinutes = "00"
+        }
         const newHours = newDate.getHours()
         const timeFormated = newHours + ":" + newMinutes
-        console.log(timeFormated)
         return timeFormated;
     }
 
@@ -19,10 +21,9 @@ const Timetable = (props) => {
         return date
     }
 
-    
-    
 
     const finishTime = convertInput(props.time)
+
     const vorteig = subHours(24, finishTime)
     const teig_vorbereiten = subHours(3.5, finishTime)
     const teig_ganz_aufgehen = subHours(3, finishTime)
@@ -32,22 +33,19 @@ const Timetable = (props) => {
     const pizza_backen  = subHours(0.25, finishTime)
     const pizza_fertig = subHours(0, finishTime)
 
-    const test = "Platzhalter"
-    const done = false
-
     const steps = [
         {
           time_start: subHours(24, finishTime),
           time_end: subHours(3.5, finishTime),
           title: "Vorteig vorbereiten",
-          text: "Rezepttext",
+          text: "18 – 24h vor dem Haupteig muss der Vorteig vorbereittet werden. Dieser nennt sich Poolish und bestehtt je zur Hälfte aus Mehl und Wasser. Dazu kommt wenig Hefe und Honig um die fermentation anzuregen.",
           done: false,
         },
         {
             time_start: subHours(3.5, finishTime),
             time_end:subHours(3, finishTime),
-            title: "Teig aufgehen lassen",
-            text: "Der Teig wird nun 30 min. aufgehen.",
+            title: "Hauptteig vorbereiten",
+            text: "Der Poolish wird nun im Wasser aufgelöst, danach wird"+ props.ingredients.mehl * 0.8655 + "g Mehl hinzugegeben.",
             done: false,
         },
         {
@@ -60,29 +58,29 @@ const Timetable = (props) => {
         {
             time_start: subHours(2.5, finishTime),
             time_end:subHours(2.25, finishTime),
-            title: "Teig aufgehen lassen",
-            text: "Der Teig wird nun 30 min. aufgehen.",
+            title: "Teig in Portionen aufteilen",
+            text: "Der Teig wird nun in" + props.portions + "gleichmässige Portionen aufgeteilt.",
             done: false,
         },
         {
             time_start: subHours(2.25, finishTime),
             time_end:subHours(0.75, finishTime),
-            title: "Teig aufgehen lassen",
-            text: "Der Teig wird nun 30 min. aufgehen.",
+            title: "Teigportionen aufgehen lassen",
+            text: "Der Teig nun 2 h aufgehen lassen, bis die Portionen etwas die doppelte Grösse erreicht haben. (Zu hohe Temperaturen vermeiden.)",
             done: false,
         },
         {
             time_start: subHours(0.75, finishTime),
             time_end:subHours(0.25, finishTime),
-            title: "Teig aufgehen lassen",
-            text: "Der Teig wird nun 30 min. aufgehen.",
+            title: "Zutaten vorbereiten",
+            text: "Die Zutaten für die Pizza vorbereiten: Tomatensauce mit Basilikum und Salz anrühren, Parmesan reiben, Tomaten schneiden, Ruccola waschen.",
             done: false,
         },
         {
             time_start: subHours(0.25, finishTime),
             time_end:subHours(0, finishTime),
-            title: "Teig aufgehen lassen",
-            text: "Der Teig wird nun 30 min. aufgehen.",
+            title: "Pizza backen",
+            text: "Pizzateig erst kurz vor Backen vom Blech nehmen. Mit Fingern die Luft von der Mitte her an den Rand drücken. Tomatensauce auf der Pizza verteilen. Nun die Pizza auf dem Pizzastein vorbacken bis der Rand leich bränlich wird. Nun Pizza aus dem ofen nehmen. Parmesan auf Pizzaboden verteilen. Tomaten verteilen und mit Mozarella belegen. Pizzarand mit Olivenöl einstreichen und fertig backen, bis der Mozarella verlaufen ist und die ersten Blasen entstehen.",
             done: false,
         },
         {
@@ -96,14 +94,6 @@ const Timetable = (props) => {
 
     return (
     <div>
-        <p>Vorteig: {vorteig}</p>
-        <p>Teig vorbereiten: {teig_vorbereiten} – {teig_ganz_aufgehen}</p>
-        <p>Teig aufgehen lassen: {teig_ganz_aufgehen} – {teig_auftetilen}</p>
-        <p>Teig aufteilen: {teig_auftetilen} – {teig_2h_ruhen}</p>
-        <p>Teig ruhen lassen: {teig_2h_ruhen} – {zutaten_vorbereitetn}</p>
-        <p>Zutaten vorbereiten: {zutaten_vorbereitetn} – {pizza_backen}</p>
-        <p>Pizza backen: {pizza_backen} – {pizza_fertig}</p>
-        <p>Pizza fertig: {pizza_fertig}</p>
         
         <div className="m-0 pb-0">
             {steps.map((item, index) => {

@@ -4,7 +4,7 @@ const Ingredients = (props) => {
   const singlePortionIngredients = {
     mehl: 155,
     wasser: 100,
-    hefe: 1,
+    hefe: 0.5,
     honig: 0.5,
     salz: 4,
     mozarella: 4,
