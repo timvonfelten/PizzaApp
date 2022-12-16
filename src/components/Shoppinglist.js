@@ -94,7 +94,7 @@ const ShoppingList = (props) => {
   };
 
   return (
-    <div className="bg-gray-100 mt-10">
+    <div className= "mt-10">
       <div className="">
         <h1 className="text-3xl bg-white text-black-800 p-5 pb-1 pl-0 underline underline-offset-8 mt-5 font-semibold tracking-wider">
           {props.category}
@@ -103,7 +103,7 @@ const ShoppingList = (props) => {
           Unerledigte Einkäufe: {opencount}
         </h2>
       </div>
-      <div className="m-0 pb-0">
+      <div className="m-0 pb-0 flex flex-wrap justify-space-between">
         {todos.map((item, index) => {
           return (
             <Todo

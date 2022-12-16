@@ -1,15 +1,26 @@
 import logo from './logo.svg';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Ingredients from './components/Ingredients';
 import Shoppinglist from './components/Shoppinglist';
 import Timetable from './components/Timetable';
 
 function App() {
 
-  // Daten aus Child Komponent an Partner Komponent übergeben Portionen > App.js
-  const [portions, setPortions] = useState(10);
 
+  const updatePizza_Sort = (portions) => {
+    const L = Array.from({ length: portions }, () => 1)
+    console.log(portions)
+    console.log(L)
+    setData(L)
+
+  }
+
+
+  // Daten aus Child Komponent an Partner Komponent übergeben Portionen > App.js
+  const [portions, setPortions] = useState(5);
+
+  const [data, setData] = useState([1,1,1,1,1]);
 
   // Portionen changer einblenden
   const [view, setView] = useState(true);
@@ -19,16 +30,14 @@ function App() {
   const [ingredients, setIngredients] = useState({});
   const [time, setTime] = useState("2022-12-01T18:00")
 
-
-
   const handlePortionChange = event => {
     setPortions(event.target.value);
+    updatePizza_Sort(event.target.value);
   };
 
   const handleTimeChange = event => {
     setTime(event.target.value);
   };
-
 
   const changeViewIndex = (index) => {
     var newViewIndex = viewIndex;
@@ -79,6 +88,38 @@ function App() {
                 </label>
             </form>
         </div>
+        <div>
+          <h1 className='text-xl mb-5'>{portions} Pizza wählen:</h1>
+
+          // Pizzatyp auswählen:
+          <div className='mb-4 flex text-center flex-wrap -m-2'>
+          { portions > 0 &&
+              Object.keys(data).map( (item) => (
+              
+                
+                <div className='w-32 h-32 bg-light p-4 m-2'>
+                <h1 className='tracking-widest font-bold mt-4'>Pizza {item}</h1>
+                <select className='block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer' defaultValue={data[item]} onChange={ (event) => 
+                    {
+                      var value = event.target.value; 
+                      var k = [...data];
+                      k[item] = value;
+                      setData(k);
+                    } 
+                    } >
+                <option value="1">Margerita</option>
+                <option value="2">Diavolo</option>
+                <option value="3">Funghi</option>
+                <option value="4">Hawaii</option>
+                </select>
+                </div>
+              ))
+          }
+          </div>
+          <div>{data}</div>
+          
+
+        </div>
       </div>
       
       <div className={viewIndex === "1" ? "visible" : "hidden"} >
@@ -99,3 +140,16 @@ function App() {
 }
 
 export default App;
+
+
+
+/*
+   /{Object.keys(pizzaSorte).map((key, index) => {
+              return(
+              <div key={index}>
+                <h2 className="first-letter:uppercase">{key} {pizzaSorte[key]}</h2>
+              </div>
+              )
+
+              })}
+              */

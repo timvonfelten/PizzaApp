@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Steps = ({time_start, time_end, title, text}) => {
+const Steps = ({time_start, time_end, title, text, ingredient}) => {
 
   const [open, setOpen] = useState(false)
 
@@ -13,10 +13,11 @@ const Steps = ({time_start, time_end, title, text}) => {
         }
         onClick={() => setOpen(!open)}>
           
-            <div className='w-full text-center'>
+            <div className='w-full text-left'>
             
             <p className='text-l font-bold mb-1 tracking-wider uppercase'>{time_start} - {time_end}</p>
-            <strong className='text-lg font-bold mb-1 tracking-wider'>{title}</strong>
+            <strong className='text-2xl font-bold mb-2 tracking-wider'>{title}</strong>
+            <p className='text-grey text-s pt-2 pb-2 tracking-wider'>{ingredient}</p>
             <p className={open ? "visible" : "hidden"}>{text}</p>
             <p className={open ? "visible text-grey" : "hidden text-grey"}>- Rezept verbergen</p>
             <p className={open ? "hidden text-grey" : "visible text-grey"}>+ Rezept anzeigen</p>

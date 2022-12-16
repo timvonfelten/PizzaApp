@@ -9,6 +9,9 @@ const Ingredients = (props) => {
     salz: 4,
     mozarella: 4,
     tomatensauce: 50,
+    ruccola: 20,
+    pilze: 20,
+    schnänichäs: 33,
   };
 
   const getIngredients = (portions) => {
@@ -38,15 +41,19 @@ const Ingredients = (props) => {
   return (
     <div>
       <h1 className="text-2xl mt-6">Zutaten</h1>
-      <ul className="m-4">
-        <li>Mehl: {ingredients.mehl} g</li>
-        <li>Wasser: {ingredients.wasser} ml</li>
-        <li>Hefe: {ingredients.hefe} g</li>
-        <li>Honig: {ingredients.honig} g</li>
-        <li>Salz: {ingredients.salz} g</li>
-        <li>Mozarella: {ingredients.mozarella} g</li>
-        <li>Tomatensauce: {ingredients.tomatensauce} g</li>
+      <ul>
+      {Object.keys(ingredients).map((key, index) => {
+        return(
+          <div key={index}>
+            <h2 className="first-letter:uppercase">{key} {ingredients[key]} g</h2>
+            
+          </div>
+        )
+      })}
+
+
       </ul>
+      
     </div>
   );
 };
