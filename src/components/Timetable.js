@@ -1,5 +1,26 @@
 import Steps from "./Steps"
+import { useState } from "react";
+
 const Timetable = (props) => {
+
+    const [viewIndex, setViewIndex] = useState(0);
+    const changeViewIndex = (index) => {
+        var newViewIndex = viewIndex;
+        if (index == 0) {
+            newViewIndex -= 1;
+        }
+        if (index == 1) {
+            newViewIndex += 1;
+        }
+        if (newViewIndex <= 0){
+            newViewIndex = 0
+        }
+        if (newViewIndex > 10){
+            newViewIndex = 10
+        }
+        setViewIndex(newViewIndex);
+        console.log(newViewIndex)
+      }
 
     const subHours = (hours, date = new Date()) => {
         const newDate = new Date(date.getTime() - hours * 60 * 60 * 1000)
@@ -12,7 +33,6 @@ const Timetable = (props) => {
         return timeFormated;
     }
 
-
     const convertInput = (input) => {
         const [dateValues, timeValues] = input.split("T")
         const [month, day, year] = dateValues.split("-")
@@ -21,9 +41,7 @@ const Timetable = (props) => {
         return date
     }
 
-
     const finishTime = convertInput(props.time)
-
 
     const steps = [
         {
@@ -92,23 +110,20 @@ const Timetable = (props) => {
       ];
 
     return (
-    <div>
-        
-        <div className="m-0 pb-0">
-            {steps.map((item, index) => {
-                return (
-                <Steps index={item.index} time_start={item.time_start} time_end={item.time_end} title={item.title} text={item.text} ingredient={item.ingredient_step}>
-                </Steps>
-                );
-            })}
-        </div>
-
-        
-
+        <div>
+            <div className="m-0 pb-0">
+                {steps.map((item, index) => {
+                    return (
+                    <Steps viewIndex={viewIndex} index={index} time_start={item.time_start} time_end={item.time_end} title={item.title} text={item.text} ingredient={item.ingredient_step}></Steps>
+                    );
+                })}
+                
+            </div>
+            <div className='h-30 bg-red w-full flex justify-center mt-10'>
+                    <button index='0' className='bg-light text-black p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex(0)}>zurück</button>
+                    <button index='1' className='bg-light text-black p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex(1)}>weiter</button>
+            </div>
     </div>
-
-    
-
     )
 }
 export default Timetable

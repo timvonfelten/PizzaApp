@@ -7,11 +7,9 @@ import Timetable from './components/Timetable';
 
 function App() {
 
-
+  // Liste erstellen, welche so viel Einträge wie Portionen hat
   const updatePizza_Sort = (portions) => {
     const L = Array.from({ length: portions }, () => 1)
-    console.log(portions)
-    console.log(L)
     setData(L)
 
   }
@@ -45,23 +43,6 @@ function App() {
     setViewIndex(newViewIndex);
   }
 
-// Portionen changer einblenden 
-//-----------------------------------------
-/*
-  const changeView = () => {
-    var newView = view
-    if(newView === true) {
-        newView = false;
-        
-    } else {
-        newView = true; 
-    }
-    setView(newView);
-}
-*/
-//-----------------------------------------
-
-
   return (
     <div className="font-sofia">
       <div className='text-center bg-black text-gold font-light p-10 tracking-widest uppercase text-2xl'>Pizzart</div>
@@ -76,27 +57,24 @@ function App() {
       <div className='m-10 pb-20'>
 
       <div className={viewIndex === "0" ? "visible" : "hidden"}>
-      <div className='text-center'>
-            <form>
-                <label className="block">
-                    <span className="block text-sm font-medium text-slate-700">Anzahl Portionen:</span>
-                    <input className="border-2 border-black m-2 p-2" type="number" value={portions} onChange={handlePortionChange}/>
+      <div className=''>
+            <form className='flex flex-wrap'>
+                <label className="w-1/2">
+                    <span className="block text-sm font-medium text-slate-700 mb-2">Anzahl Portionen:</span>
+                    <input className="border-2 border-black p-2" type="number" value={portions} onChange={handlePortionChange}/>
                 </label>
-                <label className="block">
-                    <span className="block text-sm font-medium text-slate-700">Pizza finito um:</span>
-                    <input className="border-2 border-black m-2 p-2" type="datetime-local" value={time} onChange={handleTimeChange}/>
+                <label className="w-1/2">
+                    <span className="block text-sm font-medium text-slate-700 mb-2">Pizza finito um:</span>
+                    <input className="border-2 border-black p-2" type="datetime-local" value={time} onChange={handleTimeChange}/>
                 </label>
             </form>
         </div>
         <div>
-          <h1 className='text-xl mb-5'>{portions} Pizza wählen:</h1>
+          <h1 className='text-xl mt-10 mb-5'>{portions} Pizzas wählen:</h1>
 
-          // Pizzatyp auswählen:
           <div className='mb-4 flex text-center flex-wrap -m-2'>
           { portions > 0 &&
               Object.keys(data).map( (item) => (
-              
-                
                 <div className='w-32 h-32 bg-light p-4 m-2'>
                 <h1 className='tracking-widest font-bold mt-4'>Pizza {item}</h1>
                 <select className='block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer' defaultValue={data[item]} onChange={ (event) => 

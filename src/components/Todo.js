@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Todo = ({description, text, done, onChangeTodo, index}) => {
+const Todo = ({description, text, done, onChangeTodo, index, viewIndex, item}) => {
 
   return (
-    <div className='mb-2 mr-2 text-center' onClick={() => {onChangeTodo(index)}}>
+    <div className='mb-2 mr-2 text-right' onClick={() => {onChangeTodo(index)}}>
         <div className={
             done ? "w-32 h-32 flex justify-between item-centermb-0 bg-green-100 text-black"
             : "w-32 h-32 flex justify-between item-center mb-0 bg-red-100 text-black"
