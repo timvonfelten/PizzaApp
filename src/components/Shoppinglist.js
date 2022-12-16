@@ -38,6 +38,9 @@ const ShoppingList = (props) => {
     },
   ];
 
+  const array = Array.from(Array(props.ingredients.length), () => ({ first_name: '', last_name: '' }))
+  console.log(props.ingredients)
+
   useEffect(() => {
     setTodos(checkList);
   }, [props.ingredients]);
@@ -107,11 +110,9 @@ const ShoppingList = (props) => {
         {todos.map((item, index) => {
           return (
             <Todo
-              proprequiered={props.category}
               category={item.category}
               description={item.description}
               text={item.text}
-              website={item.website}
               done={item.done}
               key={index}
               index={index}

@@ -15,11 +15,11 @@ const Timetable = (props) => {
         if (newViewIndex <= 0){
             newViewIndex = 0
         }
-        if (newViewIndex > 10){
-            newViewIndex = 10
+        if (newViewIndex > 7){
+            newViewIndex = 7
         }
         setViewIndex(newViewIndex);
-        console.log(newViewIndex)
+        console.log("viewIndex:",newViewIndex)
       }
 
     const subHours = (hours, date = new Date()) => {
@@ -45,9 +45,9 @@ const Timetable = (props) => {
 
     const steps = [
         {
-          time_start: subHours(24, finishTime),
-          time_end: subHours(3.5, finishTime),
-          title: "Vorteig vorbereiten",
+          time_start: subHours(26, finishTime),
+          time_end: subHours(20, finishTime),
+          title: "Am Vortag: Vorteig vorbereiten",
           ingredient_step: props.ingredients.mehl + " g Mehl | " + props.ingredients.wasser + " ml Wasser | " + props.ingredients.honig + " g Honig | " + props.ingredients.hefe + " g Hefe",
           text: "18 – 24h vor dem Haupteig muss der Vorteig vorbereittet werden. Dieser nennt sich Poolish und bestehtt je zur Hälfte aus Mehl und Wasser. Dazu kommt wenig Hefe und Honig um die fermentation anzuregen.",
           done: false,
@@ -111,6 +111,12 @@ const Timetable = (props) => {
 
     return (
         <div>
+            <div className="w-full h-10 m-auto text-center mb-10">
+            {steps.map((item, index) =>(
+                <div  key={item.id} className={viewIndex === index ? "w-10 h-10 rounded-full bg-gold inline-block mr-2 ml-2 text-center pt-2" : "w-10 h-10 rounded-full bg-light inline-block mr-2 ml-2 text-center pt-2"}>{index+1}</div>
+            ))}
+            </div>
+
             <div className="m-0 pb-0">
                 {steps.map((item, index) => {
                     return (
@@ -119,9 +125,11 @@ const Timetable = (props) => {
                 })}
                 
             </div>
-            <div className='h-30 bg-red w-full flex justify-center mt-10'>
+            <div className="h-15 fixed bottom-24 w-full flex justify-center -m-10 -p-20">
+            <div className='h-30 bg-red w-full flex justify-center mb-4 mt-4'>
                     <button index='0' className='bg-light text-black p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex(0)}>zurück</button>
                     <button index='1' className='bg-light text-black p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex(1)}>weiter</button>
+            </div>
             </div>
     </div>
     )

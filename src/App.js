@@ -10,15 +10,14 @@ function App() {
   // Liste erstellen, welche so viel Einträge wie Portionen hat
   const updatePizza_Sort = (portions) => {
     const L = Array.from({ length: portions }, () => 1)
-    setData(L)
+    setPizzaSorte(L)
 
   }
-
 
   // Daten aus Child Komponent an Partner Komponent übergeben Portionen > App.js
   const [portions, setPortions] = useState(5);
 
-  const [data, setData] = useState([1,1,1,1,1]);
+  const [pizzaSorte, setPizzaSorte] = useState([1,1,1,1,1]);
 
   // Portionen changer einblenden
   const [view, setView] = useState(true);
@@ -60,7 +59,7 @@ function App() {
       <div className=''>
             <form className='flex flex-wrap'>
                 <label className="w-1/2">
-                    <span className="block text-sm font-medium text-slate-700 mb-2">Anzahl Portionen:</span>
+                    <span className="block text-sm font-medium text-slate-700 mb-2">Anzahl Pizzen:</span>
                     <input className="border-2 border-black p-2" type="number" value={portions} onChange={handlePortionChange}/>
                 </label>
                 <label className="w-1/2">
@@ -74,34 +73,39 @@ function App() {
 
           <div className='mb-4 flex text-center flex-wrap -m-2'>
           { portions > 0 &&
-              Object.keys(data).map( (item) => (
+              Object.keys(pizzaSorte).map( (item) => (
                 <div className='w-32 h-32 bg-light p-4 m-2'>
                 <h1 className='tracking-widest font-bold mt-4'>Pizza {item}</h1>
-                <select className='block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer' defaultValue={data[item]} onChange={ (event) => 
+                <select className='py-2.5 px-0 w-full text-sm text-center text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-black dark:border-gray-700 focus:outline-none focus:ring-0 focus:text-black focus:border-gray-200 peer' defaultValue={pizzaSorte[item]} onChange={ (event) => 
                     {
                       var value = event.target.value; 
-                      var k = [...data];
+                      var k = [...pizzaSorte];
                       k[item] = value;
-                      setData(k);
+                      setPizzaSorte(k);
                     } 
                     } >
-                <option value="1">Margerita</option>
-                <option value="2">Diavolo</option>
-                <option value="3">Funghi</option>
-                <option value="4">Hawaii</option>
+                <option value="1" className='text-center'>Margerita</option>
+                <option value="2" className='text-center'>Ruccola</option>
+                <option value="3" className='text-center'>Funghi</option>
+                <option value="4" className='text-center'>Verdura</option>
+                <option value="5" className='text-center'>Capricciosa</option>
                 </select>
                 </div>
               ))
           }
           </div>
-          <div>{data}</div>
+          <div>{pizzaSorte}</div>
+          <div>Mehl: {ingredients.mehl}</div>
+          <div>Ruccola: {ingredients.ruccola}</div>
+          <div>Funbghi: {ingredients.pilze}</div>
+          <div>art: {ingredients.artischocken}</div>
           
 
         </div>
       </div>
       
       <div className={viewIndex === "1" ? "visible" : "hidden"} >
-        <Ingredients portions={portions} setIngredients={setIngredients}></Ingredients>
+        <Ingredients portions={portions} pizzaSorte={pizzaSorte} setIngredients={setIngredients}></Ingredients>
       </div>
       
       <div className={viewIndex === "2" ? "visible" : "hidden"} >

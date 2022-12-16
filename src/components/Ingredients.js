@@ -11,16 +11,22 @@ const Ingredients = (props) => {
     tomatensauce: 50,
     ruccola: 20,
     pilze: 20,
-    schnänichäs: 33,
+    artischocken: 20,
+    gemuese: 30,
   };
 
   const getIngredients = (portions) => {
     if (portions === 1) return singlePortionIngredients;
-
+    console.log(props.pizzaSorte)
     const ingredients = {};
     for (const ingr in singlePortionIngredients) {
       ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * portions);
+      if (ingr === "ruccola"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x == 2).length) }
+      if (ingr === "pilze"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x == 3).length) }
+      if (ingr === "gemuese"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x == 4).length) }
+      if (ingr === "artischocken"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x == 5).length) }
     }
+    console.log(ingredients)
     return ingredients;
   };
 
@@ -36,7 +42,7 @@ const Ingredients = (props) => {
 
   useEffect(() => {
     handlePortionChange();
-  }, [props.portions]);
+  }, [props.portions, props.pizzaSorte]);
 
   return (
     <div>
