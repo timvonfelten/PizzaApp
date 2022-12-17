@@ -125,7 +125,7 @@ const Timetable = (props) => {
                 })}
                 
             </div>
-            <div className="h-15 fixed bottom-24 w-full flex justify-center -m-10 -p-20">
+            <div className="h-15 fixed bottom-32 w-full flex justify-center -m-10 -p-20">
             <div className='h-30 bg-red w-full flex justify-center mb-4 mt-4'>
                     <button index='0' className='bg-light text-black p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex(0)}>zurück</button>
                     <button index='1' className='bg-light text-black p-4 mr-2 ml-2 tracking-wider' onClick={() => changeViewIndex(1)}>weiter</button>

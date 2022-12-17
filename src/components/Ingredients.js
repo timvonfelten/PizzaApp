@@ -40,6 +40,11 @@ const Ingredients = (props) => {
     props.setIngredients(ingredients);
   };
 
+  
+  const hanleDoneChange = () => {
+
+  }
+
   useEffect(() => {
     handlePortionChange();
   }, [props.portions, props.pizzaSorte]);
@@ -56,10 +61,7 @@ const Ingredients = (props) => {
           </div>
         )
       })}
-
-
-      </ul>
-      
+      </ul>  
     </div>
   );
 };

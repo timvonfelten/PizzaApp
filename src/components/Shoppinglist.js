@@ -36,6 +36,30 @@ const ShoppingList = (props) => {
       text: props.ingredients.tomatensauce,
       done: false,
     },
+    {
+      category: "Einkaufsliste",
+      description: "Ruccola",
+      text: props.ingredients.ruccola,
+      done: false,
+    },
+    {
+      category: "Einkaufsliste",
+      description: "Pilze",
+      text: props.ingredients.pilze,
+      done: false,
+    },
+    {
+      category: "Einkaufsliste",
+      description: "Artischocken",
+      text: props.ingredients.artischocken,
+      done: false,
+    },
+    {
+      category: "Einkaufsliste",
+      description: "Gemüse",
+      text: props.ingredients.gemuese,
+      done: false,
+    },
   ];
 
   const array = Array.from(Array(props.ingredients.length), () => ({ first_name: '', last_name: '' }))
@@ -62,7 +86,9 @@ const ShoppingList = (props) => {
   // Unerledigte Aufgaben zählen
   const countOpen = () => {
     const donetodos = todos.filter((item) => {
-      return !item.done;
+      if (item.text != 0) {
+        return !item.done;
+      }
     });
     CountOpenTodos(donetodos.length);
   };
@@ -99,14 +125,14 @@ const ShoppingList = (props) => {
   return (
     <div className= "mt-10">
       <div className="">
-        <h1 className="text-3xl bg-white text-black-800 p-5 pb-1 pl-0 underline underline-offset-8 mt-5 font-semibold tracking-wider">
+        <h1 className="text-3xl bg-white text-black-800 p-5 pb-1 pl-0 mt-5 font-semibold tracking-wider">
           {props.category}
         </h1>
-        <h2 className="pb-6 pl-0 pt-2 text-s font-semibold tracking-wide bg-white">
+        <h2 className="pb-8 pl-0 pt-2 text-s font-semibold tracking-wide bg-white">
           Unerledigte Einkäufe: {opencount}
         </h2>
       </div>
-      <div className="m-0 pb-0 flex flex-wrap justify-space-between">
+      <div className="m-0 pb-0">
         {todos.map((item, index) => {
           return (
             <Todo
