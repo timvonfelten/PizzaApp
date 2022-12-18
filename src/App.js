@@ -1,5 +1,3 @@
-import logo from './logo.svg';
-
 import { useEffect, useState } from 'react';
 import Ingredients from './components/Ingredients';
 import Shoppinglist from './components/Shoppinglist';
@@ -17,7 +15,7 @@ function App() {
   // Daten aus Child Komponent an Partner Komponent übergeben Portionen > App.js
   const [portions, setPortions] = useState(5);
 
-  const [pizzaSorte, setPizzaSorte] = useState([1,1,1,1,1]);
+  const [pizzaSorte, setPizzaSorte] = useState(["1","1","1","1","1"]);
 
   // Portionen changer einblenden
   const [view, setView] = useState(true);
@@ -28,6 +26,9 @@ function App() {
   const [time, setTime] = useState("2022-12-01T18:00")
 
   const handlePortionChange = event => {
+    if (event.target.value <= 0){
+      event.target = 1
+    }
     setPortions(event.target.value);
     updatePizza_Sort(event.target.value);
   };
@@ -84,25 +85,42 @@ const finishTime = convertInput(time)
       <div className='m-10 pb-20'>
 
       <div className={viewIndex === "0" ? "visible" : "hidden"}>
+        <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
+          <div className='w-1/2 mt-2 pb-1'>Pizzen:</div>
+          <div className='w-1/2'><input className="border-2 border-black p-1 w-full" type="number" min="1" max="30" value={portions} onChange={handlePortionChange}/></div>
+        </div>
+        <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
+          <div className='w-1/2 mt-2 pb-2'>Pizza fertig:</div>
+          <div className='w-1/2'><input className="border-2 border-black p-1 w-full" type="datetime-local" value={time} onChange={handleTimeChange}/></div>
+        </div>
+        <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
+          <div className='w-1/2 mt-2 pb-2'>Vorteig (Vortag):</div>
+          <div className='w-1/2 mt-2 pb-2'><p>{subHours(26, finishTime)} – {subHours(20, finishTime)} Uhr</p></div>
+        </div>
+        <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
+          <div className='w-1/2 mt-2 pb-2'>Hauptteig:</div>
+          <div className='w-1/2 mt-2 pb-2'><p>{subHours(26, finishTime)} Uhr</p></div>
+        </div>
+        <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
+          <div className='w-1/2 mt-2 pb-2'>Pizza fertig:</div>
+          <div className='w-1/2 mt-2 pb-2'><p>{subHours(0, finishTime)} Uhr</p></div>
+        </div>
+
+        
         <div className=''>
+          {/* 
           <div className=''>
             <form className='flex flex-wrap'>
                 <label className="mr-4">
                     <span className="block text-sm font-medium text-slate-700 mb-2">Anzahl Pizzen:</span>
-                    <input className="border-2 border-black p-2" type="number" value={portions} onChange={handlePortionChange}/>
+                    <input className="border-2 border-black p-2" type="number" min="1" max="30" value={portions} onChange={handlePortionChange}/>
                 </label>
                 <label className="">
                     <span className="block text-sm font-medium text-slate-700 mb-2">Pizza fertig:</span>
                     <input className="border-2 border-black p-2" type="datetime-local" value={time} onChange={handleTimeChange}/>
                 </label>
             </form>
-          </div>
-          <div className=''>
-            <h1 className='text-xl'>Zeitplan:</h1>
-            <p>{subHours(26, finishTime)}-{subHours(20, finishTime)} Uhr, Vorteig (Vortag)</p>
-            <p>{subHours(26, finishTime)} Hautteig</p>
-            <p>{subHours(0, finishTime)} Pizza fertig</p>
-          </div>
+          </div>*/}
         </div>
         <div>
           <h1 className='text-xl mt-10 mb-5'>{portions} Pizzas wählen:</h1>
@@ -112,7 +130,7 @@ const finishTime = convertInput(time)
               Object.keys(pizzaSorte).map( (item) => (
                 <div className='w-32 h-32 bg-light p-4 m-2'>
                 <h1 className='tracking-widest font-bold mt-4'>Pizza {item}</h1>
-                <select className='py-2.5 px-0 w-full text-sm text-center text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-black dark:border-gray-700 focus:outline-none focus:ring-0 focus:text-black focus:border-gray-200 peer' defaultValue={pizzaSorte[item]} onChange={ (event) => 
+                <select className='py-2.5 px-0 w-full text-sm text-center text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 dark:text-black dark:border-gray-700 focus:outline-none focus:ring-0 focus:text-black focus:border-gray-200 peer' defaultValue={pizzaSorte[item]} onChange={ (event) => 
                     {
                       var value = event.target.value; 
                       var k = [...pizzaSorte];
@@ -130,28 +148,18 @@ const finishTime = convertInput(time)
               ))
           }
           </div>
-          <div>{pizzaSorte}</div>
-          <div>Mehl: {ingredients.mehl}</div>
-          <div>Ruccola: {ingredients.ruccola}</div>
-          <div>Funbghi: {ingredients.pilze}</div>
-          <div>art: {ingredients.artischocken}</div>
-          
-
         </div>
       </div>
       
       <div className={viewIndex === "1" ? "visible" : "hidden"} >
         <Ingredients portions={portions} pizzaSorte={pizzaSorte} setIngredients={setIngredients}></Ingredients>
       </div>
-      
       <div className={viewIndex === "2" ? "visible" : "hidden"} >
       <Shoppinglist category="Einkaufsliste" ingredients={ingredients}></Shoppinglist>
       </div>
-
       <div className={viewIndex === "3" ? "visible" : "hidden"}>
       <Timetable time={finishTime} ingredients={ingredients} portions={portions}></Timetable>
       </div>
-
       </div>
     </div>
   );
