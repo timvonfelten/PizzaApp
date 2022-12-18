@@ -26,22 +26,14 @@ const Timetable = (props) => {
         const newDate = new Date(date.getTime() - hours * 60 * 60 * 1000)
         var newMinutes = newDate.getMinutes()
         if (newMinutes === 0){
-            newMinutes = "00"
-        }
+            newMinutes = "00"        }
         const newHours = newDate.getHours()
         const timeFormated = newHours + ":" + newMinutes
         return timeFormated;
     }
 
-    const convertInput = (input) => {
-        const [dateValues, timeValues] = input.split("T")
-        const [month, day, year] = dateValues.split("-")
-        const [hours, minutes] = timeValues.split(":")
-        const date = new Date(+year, +month - 1, +day, +hours, +minutes, "00");
-        return date
-    }
 
-    const finishTime = convertInput(props.time)
+    const finishTime = props.time
 
     const steps = [
         {
@@ -49,7 +41,7 @@ const Timetable = (props) => {
           time_end: subHours(20, finishTime),
           title: "Am Vortag: Vorteig vorbereiten",
           ingredient_step: props.ingredients.mehl + " g Mehl | " + props.ingredients.wasser + " ml Wasser | " + props.ingredients.honig + " g Honig | " + props.ingredients.hefe + " g Hefe",
-          text: "18 – 24h vor dem Haupteig muss der Vorteig vorbereittet werden. Dieser nennt sich Poolish und bestehtt je zur Hälfte aus Mehl und Wasser. Dazu kommt wenig Hefe und Honig um die fermentation anzuregen.",
+          text: "18 - 24h vor dem Haupteig muss der Vorteig vorbereittet werden. Dieser nennt sich Poolish und bestehtt je zur Hälfte aus Mehl und Wasser. Dazu kommt wenig Hefe und Honig um die fermentation anzuregen.",
           done: false,
         },
         {  time_start: subHours(3.5, finishTime),
