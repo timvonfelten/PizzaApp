@@ -14,7 +14,7 @@ const Steps = ({time_start, time_end, title, text, ingredient, index, viewIndex}
             
             <p className='text-l font-bold mb-1 tracking-wider uppercase'>{time_start} - {time_end}</p>
             <strong className='text-2xl font-bold mb-2 tracking-wider'>{title}</strong>
-            <p className='text-black pt-2 pb-2 tracking-wider'>{ingredient}</p>
+            <p className={ingredient == "" ? "hidden" : 'text-black pt-2 pb-2 tracking-wider'}>{ingredient}</p>
             <p className="mt-4 mb-10">{text}</p>
 
             </div>

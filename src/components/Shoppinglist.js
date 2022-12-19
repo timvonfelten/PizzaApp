@@ -7,54 +7,70 @@ var doneCount = 0;
 const ShoppingList = (props) => {
   const checkList = [
     {
+      key: 1,
       category: "Einkaufsliste",
       description: "Mehl",
       text: props.ingredients.mehl,
       done: false,
     },
     {
+      key: 2,
       category: "Einkaufsliste",
       description: "Hefe",
       text: props.ingredients.hefe,
       done: false,
     },
     {
+      key: 3,
       category: "Einkaufsliste",
       description: "Honig",
       text: props.ingredients.honig,
       done: false,
     },
     {
+      key: 4,
       category: "Einkaufsliste",
       description: "Mozarella",
       text: props.ingredients.mozarella,
       done: false,
     },
     {
+      key: 5,
       category: "Einkaufsliste",
       description: "Tomatensauce",
       text: props.ingredients.tomatensauce,
       done: false,
     },
     {
+      key: 6,
+      category: "Einkaufsliste",
+      description: "Basilikum",
+      text: props.ingredients.basilikum,
+      done: false,
+    },
+    {
+      key: 7,
       category: "Einkaufsliste",
       description: "Ruccola",
       text: props.ingredients.ruccola,
       done: false,
     },
     {
+      key: 8,
       category: "Einkaufsliste",
       description: "Pilze",
       text: props.ingredients.pilze,
       done: false,
     },
     {
+      key: 9,
       category: "Einkaufsliste",
       description: "Artischocken",
       text: props.ingredients.artischocken,
       done: false,
     },
     {
+      key: 10,
       category: "Einkaufsliste",
       description: "Gemüse",
       text: props.ingredients.gemuese,
@@ -62,8 +78,7 @@ const ShoppingList = (props) => {
     },
   ];
 
-  const array = Array.from(Array(props.ingredients.length), () => ({ first_name: '', last_name: '' }))
-  console.log(props.ingredients)
+
 
   useEffect(() => {
     setTodos(checkList);
@@ -104,24 +119,13 @@ const ShoppingList = (props) => {
       doneCount++;
     }
     setTodos(newTodos);
-    updateProgress();
   };
 
   // Nur unerledigte Check ausführen wenn todos geändert wird mittels useEffect
   useEffect(() => {
     countOpen();
   }, [todos]);
-
-  const updateProgress = () => {
-    console.log("update progress:", { doneCount }, "übergebener % value:", {
-      progress,
-    });
-    console.log("");
-    const data = (100 / checkList.length) * doneCount;
-    // Daten an Parent zurückgebgen für ProgressBar
-    //props.childToParent(data)
-  };
-
+  
   return (
     <div className= "mt-10">
       <div className="">

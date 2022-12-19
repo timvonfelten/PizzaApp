@@ -13,9 +13,9 @@ function App() {
   }
 
   // Daten aus Child Komponent an Partner Komponent übergeben Portionen > App.js
-  const [portions, setPortions] = useState(5);
+  const [portions, setPortions] = useState(10);
 
-  const [pizzaSorte, setPizzaSorte] = useState(["1","1","1","1","1"]);
+  const [pizzaSorte, setPizzaSorte] = useState([1,1,1,1,1,1,1,1,1,1]);
 
   // Portionen changer einblenden
   const [view, setView] = useState(true);
@@ -23,14 +23,18 @@ function App() {
   //Portionen von Child an App übergeben
   //
   const [ingredients, setIngredients] = useState({});
-  const [time, setTime] = useState("2022-12-01T18:00")
+  const [time, setTime] = useState("2023-12-01T18:00")
 
   const handlePortionChange = event => {
+    console.log(event.target.value)
+    console.log(event.target.getAttribute('numpizza'))
+    /*
     if (event.target.value <= 0){
       event.target = 1
     }
-    setPortions(event.target.value);
-    updatePizza_Sort(event.target.value);
+    */
+    setPortions(event.target.getAttribute('numpizza'));
+    updatePizza_Sort(event.target.getAttribute('numpizza'));
   };
 
   const handleTimeChange = event => {
@@ -52,20 +56,43 @@ function App() {
     const timeFormated = newHours + ":" + newMinutes
     return timeFormated;
 }
+const [dateError, setDateError] = useState(false)
+
 
 const convertInput = (input) => {
-    const [dateValues, timeValues] = input.split("T")
-    const [month, day, year] = dateValues.split("-")
-    const [hours, minutes] = timeValues.split(":")
-    const date = new Date(+year, +month - 1, +day, +hours, +minutes, "00");
-    return date
+    console.log(input)
+    if (input != ""){
+      var d = new Date();
+      // DateError aktivieren falls Datum in Vergangenheit liegt.
+      if (dateError === false & Date.parse(input) < Date.parse(d)){
+          setDateError(prevCheck => !prevCheck);
+      }
+      // DateError deaktivieren, falls Datum nicht in Vergangenheit liegt.
+      if (dateError === true & Date.parse(input) > Date.parse(d)){
+        setDateError(prevCheck => !prevCheck);
+      }
+      const [dateValues, timeValues] = input.split("T")
+      const [year, month, day] = dateValues.split("-")
+      const [hours, minutes] = timeValues.split(":")
+      const date = new Date(+year, +month - 1, +day, +hours, +minutes, "00");
+      return date
+    }
+    
 }
 
 const finishTime = convertInput(time)
 
+const anzahlPizzaButtons = [];
+
+
   return (
     <div className="font-sofia">
-      <div className='text-center bg-black text-gold font-light p-10 tracking-widest uppercase text-2xl'>Pizzart</div>
+      <div className='text-center bg-black text-gold font-light p-10 tracking-widest uppercase text-2xl'>Pizzart
+        <div className='text-xs mt-2 font-normal tracking-wider text-gold'>
+          {portions} Pizza<a className={portions > 1 ? "" : "hidden"}>s</a> @ {subHours(0, finishTime)}
+        </div>
+      </div>
+      
 
       <div className='h-15 bg-black fixed bottom-0 w-full flex justify-center'>
       <button index='0' className={viewIndex == 0 ? "bg-black text-gold text-xs uppercase p-4 mr-2 ml-2 tracking-widest" : "bg-black text-light text-xs uppercase p-4 mr-2 ml-2 tracking-widest"} onClick={() => changeViewIndex('0')}>
@@ -85,52 +112,46 @@ const finishTime = convertInput(time)
       <div className='m-10 pb-20'>
 
       <div className={viewIndex === "0" ? "visible" : "hidden"}>
+        <p className={dateError ? 'text-center mb-2 text-red-700' : "hidden"}>Bitte wähle ein Datum welches in der Zukunft liegt.</p>
         <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
-          <div className='w-1/2 mt-2 pb-1'>Pizzen:</div>
-          <div className='w-1/2'><input className="border-2 border-black p-1 w-full" type="number" min="1" max="30" value={portions} onChange={handlePortionChange}/></div>
-        </div>
-        <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
-          <div className='w-1/2 mt-2 pb-2'>Pizza fertig:</div>
-          <div className='w-1/2'><input className="border-2 border-black p-1 w-full" type="datetime-local" value={time} onChange={handleTimeChange}/></div>
+          <div className='w-1/2 mt-2 pb-2'>Pizza fertig um:</div>
+          <div className='w-1/2'>
+            <input className="border-2 border-black p-1 w-full" type="datetime-local" value={time} onChange={handleTimeChange}/></div>
         </div>
         <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
           <div className='w-1/2 mt-2 pb-2'>Vorteig (Vortag):</div>
-          <div className='w-1/2 mt-2 pb-2'><p>{subHours(26, finishTime)} – {subHours(20, finishTime)} Uhr</p></div>
+          <div className='w-1/2 mt-2 pb-2'>
+            <p>{subHours(26, finishTime)} – {subHours(20, finishTime)} Uhr</p></div>
         </div>
         <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
           <div className='w-1/2 mt-2 pb-2'>Hauptteig:</div>
-          <div className='w-1/2 mt-2 pb-2'><p>{subHours(26, finishTime)} Uhr</p></div>
+          <div className='w-1/2 mt-2 pb-2'>
+            <p>{subHours(3.5, finishTime)} Uhr</p></div>
         </div>
         <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
           <div className='w-1/2 mt-2 pb-2'>Pizza fertig:</div>
-          <div className='w-1/2 mt-2 pb-2'><p>{subHours(0, finishTime)} Uhr</p></div>
+          <div className='w-1/2 mt-2 pb-2'>
+            <p>{subHours(0, finishTime)} Uhr</p></div>
         </div>
 
-        
-        <div className=''>
-          {/* 
-          <div className=''>
-            <form className='flex flex-wrap'>
-                <label className="mr-4">
-                    <span className="block text-sm font-medium text-slate-700 mb-2">Anzahl Pizzen:</span>
-                    <input className="border-2 border-black p-2" type="number" min="1" max="30" value={portions} onChange={handlePortionChange}/>
-                </label>
-                <label className="">
-                    <span className="block text-sm font-medium text-slate-700 mb-2">Pizza fertig:</span>
-                    <input className="border-2 border-black p-2" type="datetime-local" value={time} onChange={handleTimeChange}/>
-                </label>
-            </form>
-          </div>*/}
-        </div>
+        <h1 className='text-2xl mt-12'>Anzahl Pizzas wählen:</h1>
+        <div className='flex flex-wrap mt-4 -m-1 text-center'>
+          {(() => {
+            for (let i = 0; i < 20; i++) {
+              anzahlPizzaButtons.push(<div className={portions > i ? 'w-12 h-12 m-1 bg-gold pt-3 cursor-pointer':'w-12 h-12 m-1 bg-light pt-3 cursor-pointer'} numpizza={i+1} key={i} value={i} onClick={handlePortionChange}>{i+1}</div>);
+            }
+            return anzahlPizzaButtons;
+          })()}
+          </div>
         <div>
-          <h1 className='text-xl mt-10 mb-5'>{portions} Pizzas wählen:</h1>
+          <h1 className='text-2xl mt-12 mb-5'>Pizzasorte wählen:</h1>
 
           <div className='mb-4 flex text-center flex-wrap -m-2'>
           { portions > 0 &&
               Object.keys(pizzaSorte).map( (item) => (
                 <div className='w-32 h-32 bg-light p-4 m-2'>
-                <h1 className='tracking-widest font-bold mt-4'>Pizza {item}</h1>
-                <select className='py-2.5 px-0 w-full text-sm text-center text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 dark:text-black dark:border-gray-700 focus:outline-none focus:ring-0 focus:text-black focus:border-gray-200 peer' defaultValue={pizzaSorte[item]} onChange={ (event) => 
+                <h1 className='tracking-widest font-bold mt-4'>Pizza {Number(item)+1}</h1>
+                <select className='cursor-pointer py-2.5 px-0 w-full text-sm text-center text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 dark:text-black dark:border-gray-700 focus:outline-none focus:ring-0 focus:text-black focus:border-gray-200 peer' defaultValue={pizzaSorte[item]} onChange={ (event) => 
                     {
                       var value = event.target.value; 
                       var k = [...pizzaSorte];
@@ -149,16 +170,41 @@ const finishTime = convertInput(time)
           }
           </div>
         </div>
+        <h1 className='text-2xl mt-12 pb-4 '>Wichtigste Zutaten:</h1>
+        <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
+          <div className='w-1/2 mt-2 pb-2'>
+            Mehl:
+          </div>
+          <div className='w-1/2 mt-2 pb-2'>
+            {ingredients.mehl} g
+          </div>
+        </div>
+        <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
+          <div className='w-1/2 mt-2 pb-2'>
+            Tomatensauce:
+          </div>
+          <div className='w-1/2 mt-2 pb-2'>
+            {ingredients.tomatensauce} g
+          </div>
+        </div>
+        <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
+          <div className='w-1/2 mt-2 pb-2'>
+            Mozarella:
+          </div>
+          <div className='w-1/2 mt-2 pb-2'>
+            {ingredients.mozarella} g
+          </div>
+        </div>
       </div>
       
       <div className={viewIndex === "1" ? "visible" : "hidden"} >
         <Ingredients portions={portions} pizzaSorte={pizzaSorte} setIngredients={setIngredients}></Ingredients>
       </div>
       <div className={viewIndex === "2" ? "visible" : "hidden"} >
-      <Shoppinglist category="Einkaufsliste" ingredients={ingredients}></Shoppinglist>
+        <Shoppinglist category="Einkaufsliste" ingredients={ingredients}></Shoppinglist>
       </div>
       <div className={viewIndex === "3" ? "visible" : "hidden"}>
-      <Timetable time={finishTime} ingredients={ingredients} portions={portions}></Timetable>
+        <Timetable time={finishTime} ingredients={ingredients} portions={portions}></Timetable>
       </div>
       </div>
     </div>
