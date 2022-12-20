@@ -6,7 +6,7 @@ const Steps = ({time_start, time_end, title, text, ingredient, index, viewIndex}
 
 
   return (
-    <div className= {viewIndex == index ? 'cursor-pointer' :'cursor-pointer hidden'}>
+    <div className= {viewIndex == index ? 'mb-32' :'hidden'}>
         <div className="flex justify-between item-center p-4 bg-light text-black"
         onClick={() => setOpen(!open)}>
           

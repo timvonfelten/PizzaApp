@@ -9,7 +9,6 @@ function App() {
   const updatePizza_Sort = (portions) => {
     const L = Array.from({ length: portions }, () => 1)
     setPizzaSorte(L)
-
   }
 
   // Daten aus Child Komponent an Partner Komponent übergeben Portionen > App.js
@@ -77,13 +76,11 @@ const convertInput = (input) => {
       const date = new Date(+year, +month - 1, +day, +hours, +minutes, "00");
       return date
     }
-    
 }
 
 const finishTime = convertInput(time)
 
 const anzahlPizzaButtons = [];
-
 
   return (
     <div className="font-sofia">
