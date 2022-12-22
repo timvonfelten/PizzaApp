@@ -3,14 +3,18 @@ import { useState } from "react";
 
 const Timetable = (props) => {
 
+    // Umschalten der einzelnen Rezeptschritte.
     const [viewIndex, setViewIndex] = useState(0);
-    const changeViewIndex = (index) => {
+    const changeViewIndex = (index, index_nr) => {
         var newViewIndex = viewIndex;
-        if (index == 0) {
+        if (index === 0) {
             newViewIndex -= 1;
         }
-        if (index == 1) {
+        if (index === 1) {
             newViewIndex += 1;
+        }
+        if (index === 2) {
+            newViewIndex = index_nr;
         }
         if (newViewIndex <= 0){
             newViewIndex = 0
@@ -19,22 +23,25 @@ const Timetable = (props) => {
             newViewIndex = 7
         }
         setViewIndex(newViewIndex);
-        console.log("viewIndex:",newViewIndex)
       }
 
     const subHours = (hours, date = new Date()) => {
         const newDate = new Date(date.getTime() - hours * 60 * 60 * 1000)
         var newMinutes = newDate.getMinutes()
         if (newMinutes === 0){
-            newMinutes = "00"        }
+            newMinutes = "00" //13:0 zu 13:00 verbessern  
+        }
+        if (newMinutes === 1 || newMinutes === 2 || newMinutes === 3 || newMinutes === 4 || newMinutes === 5 || newMinutes === 6 || newMinutes === 7 || newMinutes === 8 || newMinutes === 9){
+            newMinutes = "0" + newMinutes;
+        }
         const newHours = newDate.getHours()
         const timeFormated = newHours + ":" + newMinutes
         return timeFormated;
     }
 
-
     const finishTime = props.time
 
+    // Inhalt der Rezeptschrittet mit Berechnung der entsprechenden Zeitabschniten
     const steps = [
         {
           key: 1,
@@ -114,7 +121,7 @@ const Timetable = (props) => {
         <div>
             <div className="w-full m-auto text-center mb-4">
             {steps.map((item, index) =>(
-                <div  key={item.id} className={viewIndex === index ? "w-10 h-10 rounded-full bg-gold inline-block mr-2 ml-2 mb-2 text-center pt-2" : "w-10 h-10 rounded-full bg-light inline-block mr-2 ml-2 mb-2 text-center pt-2"}>{index+1}</div>
+                <div  key={item.id} onClick={() => changeViewIndex(2,index)} className={viewIndex === index ? "w-10 h-10 rounded-full bg-gold inline-block mr-2 ml-2 mb-2 text-center pt-2" : "w-10 h-10 rounded-full bg-light cursor-pointer inline-block mr-2 ml-2 mb-2 text-center pt-2"}>{index+1}</div>
             ))}
             </div>
 
@@ -124,15 +131,14 @@ const Timetable = (props) => {
                     <Steps key={item.id} viewIndex={viewIndex} index={index} time_start={item.time_start} time_end={item.time_end} title={item.title} text={item.text} ingredient={item.ingredient_step}></Steps>
                     );
                 })}
-                
             </div>
-            <div className="h-15 fixed bottom-28 w-full flex justify-center -m-10 -p-20 bg-white">
+            <div className="h-15 fixed bottom-32 w-full flex justify-center -m-10 -p-20 bg-white">
             <div className='h-30 bg-red w-full flex justify-center mb-4 mt-4'>
-                    <button index='0' className={viewIndex === 0 ? 'bg-light text-grey p-4 mr-2 ml-2 tracking-wider cursor-not-allowed' : 'bg-light text-black p-4 mr-2 ml-2 tracking-wider'} onClick={() => changeViewIndex(0)}>zurück</button>
-                    <button index='1' className={viewIndex === 7 ? 'bg-light text-grey p-4 mr-2 ml-2 tracking-wider cursor-not-allowed' : 'bg-light text-black p-4 mr-2 ml-2 tracking-wider'} onClick={() => changeViewIndex(1)}>weiter</button>
+                    <button index='0' className={viewIndex === 0 ? 'bg-light text-slate-400 p-4 mr-2 ml-2 tracking-wider cursor-not-allowed' : 'bg-light text-black p-4 mr-2 ml-2 tracking-wider'} onClick={() => changeViewIndex(0)}>zurück</button>
+                    <button index='1' className={viewIndex === 7 ? 'bg-light text-slate-400 p-4 mr-2 ml-2 tracking-wider cursor-not-allowed' : 'bg-light text-black p-4 mr-2 ml-2 tracking-wider'} onClick={() => changeViewIndex(1)}>weiter</button>
             </div>
             </div>
-    </div>
+        </div>
     )
 }
 export default Timetable
