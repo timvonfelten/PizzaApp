@@ -22,10 +22,10 @@ const Ingredients = (props) => {
     for (const ingr in singlePortionIngredients) {
       ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * portions);
       // Anpassen der Einkaufliste gemäss Auswahl der Pizzasorten
-      if (ingr === "ruccola"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x == 2).length) }
-      if (ingr === "pilze"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x == 3).length) }
-      if (ingr === "gemuese"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x == 4).length) }
-      if (ingr === "artischocken"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x == 5).length) }
+      if (ingr === "ruccola"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x === "2").length) }
+      if (ingr === "pilze"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x === "3").length) }
+      if (ingr === "gemuese"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x === "4").length) }
+      if (ingr === "artischocken"){ ingredients[ingr] = Math.round(singlePortionIngredients[ingr] * props.pizzaSorte.filter(x => x === "5").length) }
     }
     return ingredients;
   };
@@ -39,8 +39,9 @@ const Ingredients = (props) => {
     setIngredients(ingredients);
     props.setIngredients(ingredients);
   };
+  
 
-  useEffect(() => {
+  useEffect((props, getIngredients) => {
     handlePortionChange();
   }, [props.portions, props.pizzaSorte]);
 
@@ -52,7 +53,6 @@ const Ingredients = (props) => {
         return(
           <div key={index}>
             <h2 className="first-letter:uppercase">{key} {ingredients[key]} g</h2>
-            
           </div>
         )
       })}

@@ -2,8 +2,6 @@ import React from "react";
 import Todo from "./Todo";
 import { useState, useEffect } from "react";
 
-var doneCount = 0;
-
 const ShoppingList = (props) => {
   const checkList = [
     {
@@ -82,27 +80,23 @@ const ShoppingList = (props) => {
 
   useEffect(() => {
     setTodos(checkList);
-  }, [props.ingredients]);
+  }, [props.ingredients]);   // 
 
   // Zählen wie lange alle Elementet sind
-  const CountCloseTodos = useState(0);
   const [opencount, CountOpenTodos] = useState(0);
 
-  const progress = (100 / checkList.length) * (doneCount + 1);
-
-  // Checks Filter, damit nur jene verwendet werden, welche der aktuellen Kategorie angehören.
-  const todosfilterd = checkList.filter(
-    (todo) => todo.category === props.category
-  );
 
   //todos.filter(todo => todo.category === props.category).map((item, index) => {        return blblal
-  const [todos, setTodos] = useState(todosfilterd);
+  const [todos, setTodos] = useState(checkList);
 
   // Unerledigte Aufgaben zählen
   const countOpen = () => {
     const donetodos = todos.filter((item) => {
-      if (item.text != 0) {
+      if (item.text !== 0) {
         return !item.done;
+      }
+      else{
+        return item.done;
       }
     });
     CountOpenTodos(donetodos.length);
@@ -113,10 +107,8 @@ const ShoppingList = (props) => {
     const newTodos = [...todos];
     if (newTodos[index].done) {
       newTodos[index].done = false;
-      doneCount--;
     } else {
       newTodos[index].done = true;
-      doneCount++;
     }
     setTodos(newTodos);
   };

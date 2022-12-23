@@ -57,7 +57,7 @@ const Timetable = (props) => {
             time_start: subHours(3.5, finishTime),
             time_end:subHours(3, finishTime),
             title: "Hauptteig vorbereiten",
-            ingredient_step: props.ingredients.mehl + " g Mehl | " + props.ingredients.salz + " g Salz | "+ Math.round(props.ingredients.wasser * 0.7) + " ml Wasser",
+            ingredient_step: Math.round(props.ingredients.mehl * 0.805) + " g Mehl | " + props.ingredients.salz + " g Salz | "+ Math.round(props.ingredients.wasser * 0.7) + " ml Wasser",
             text: "Der Poolish wird nun im Wasser aufgelöst, danach wird "+ Math.round(props.ingredients.mehl * 0.805) + " g Mehl hinzugegeben.",
             done: false,
         },
@@ -94,7 +94,7 @@ const Timetable = (props) => {
             time_end:subHours(0.25, finishTime),
             title: "Zutaten vorbereiten",
             ingredient_step:"",
-            text: "Die Zutaten für die Pizza vorbereiten: Tomatensauce mit Basilikum und Salz anrühren, Parmesan reiben, Tomaten schneiden, weitere Zutaten schneiden.",
+            text: "Die Zutaten für die Pizza vorbereiten: Tomatensauce mit Basilikum und Salz anrühren, Parmesan reiben, Tomaten schneiden, weitere Zutaten schneiden. Den Pizzastein in den Ofen legen und auf maximalen Temperatur vorheizen.",
             done: false,
         },
         {
@@ -121,19 +121,21 @@ const Timetable = (props) => {
         <div>
             <div className="w-full m-auto text-center mb-4">
             {steps.map((item, index) =>(
-                <div  key={item.id} onClick={() => changeViewIndex(2,index)} className={viewIndex === index ? "w-10 h-10 rounded-full bg-gold inline-block mr-2 ml-2 mb-2 text-center pt-2" : "w-10 h-10 rounded-full bg-light cursor-pointer inline-block mr-2 ml-2 mb-2 text-center pt-2"}>{index+1}</div>
+                <div  key={item.key} onClick={() => changeViewIndex(2,index)} className={viewIndex === index ? "w-10 h-10 rounded-full bg-gold inline-block mr-2 ml-2 mb-2 text-center pt-2" : "w-10 h-10 rounded-full bg-light cursor-pointer inline-block mr-2 ml-2 mb-2 text-center pt-2"}>{index+1}</div>
             ))}
             </div>
 
             <div className="m-0 pb-0">
                 {steps.map((item, index) => {
                     return (
-                    <Steps key={item.id} viewIndex={viewIndex} index={index} time_start={item.time_start} time_end={item.time_end} title={item.title} text={item.text} ingredient={item.ingredient_step}></Steps>
+                        <div key={item.key}>
+                    <Steps viewIndex={viewIndex} index={index} time_start={item.time_start} time_end={item.time_end} title={item.title} text={item.text} ingredient={item.ingredient_step}></Steps>
+                    </div>
                     );
                 })}
             </div>
-            <div className="h-15 fixed bottom-32 w-full flex justify-center -m-10 -p-20 bg-white">
-            <div className='h-30 bg-red w-full flex justify-center mb-4 mt-4'>
+            <div className="h-15 fixed bottom-28 w-full flex justify-center -m-10 -p-20 bg-white">
+            <div className='h-30 bg-red w-full flex justify-center mb-6 mt-3'>
                     <button index='0' className={viewIndex === 0 ? 'bg-light text-slate-400 p-4 mr-2 ml-2 tracking-wider cursor-not-allowed' : 'bg-light text-black p-4 mr-2 ml-2 tracking-wider'} onClick={() => changeViewIndex(0)}>zurück</button>
                     <button index='1' className={viewIndex === 7 ? 'bg-light text-slate-400 p-4 mr-2 ml-2 tracking-wider cursor-not-allowed' : 'bg-light text-black p-4 mr-2 ml-2 tracking-wider'} onClick={() => changeViewIndex(1)}>weiter</button>
             </div>

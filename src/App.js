@@ -162,27 +162,18 @@ const anzahlPizzaButtons = [];
         </div>
         <h1 className='text-2xl mt-12 pb-4 '>Wichtigste Zutaten:</h1>
         <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
-          <div className='w-1/2 mt-2 pb-2'>
-            Mehl:
-          </div>
-          <div className='w-1/2 mt-2 pb-2'>
-            {ingredients.mehl} g
+          <div className='mt-2 pb-2'>
+            Mehl: {ingredients.mehl} g
           </div>
         </div>
         <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
-          <div className='w-1/2 mt-2 pb-2'>
-            Tomatensauce:
-          </div>
-          <div className='w-1/2 mt-2 pb-2'>
-            {ingredients.tomatensauce} g
+          <div className='mt-2 pb-2'>
+            Tomatensauce: {ingredients.tomatensauce} g
           </div>
         </div>
         <div className='flex flex-wrap text-xl tracking-wider pt-2 pb-2 border-b-2'>
-          <div className='w-1/2 mt-2 pb-2'>
-            Mozarella:
-          </div>
-          <div className='w-1/2 mt-2 pb-2'>
-            {ingredients.mozarella} g
+          <div className='mt-2 pb-2'>
+            Mozarella: {ingredients.mozarella} g
           </div>
         </div>
       </div>
